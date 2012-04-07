@@ -1,28 +1,50 @@
 require 'bundler'
 Bundler.setup
 
+$:.unshift File.expand_path("../../lib", __FILE__)
 require 'form_forms'
+require 'simple_form'
 
 require 'test/unit'
-require 'minitest/spec'
 
-ENV['RAILS_ENV'] = 'test'
+require 'active_model'
+require 'action_controller'
+require 'action_view'
+require 'action_view/template'
 
-require 'rails'
+require 'active_support/core_ext/module/deprecation'
 require 'action_view/test_case'
-require 'action_view/test_helper'
-require "rails/test_help" # adds stuff like @routes, etc.
-require 'sqlite3'
-require 'active_record'
 
+Dir["#{File.dirname(__FILE__)}/support/*.rb"].each do |file|
+  require file
+end
+I18n.default_locale = :en
 
-class ActiveRecordMock < ActiveRecord::Base
-  establish_connection(:adapter => "sqlite3", :database => ":memory:")
+class ActionView::TestCase
+  include SimpleForm::ActionViewExtensions::FormHelper
 
-  alias_method :save, :valid?
-  def self.columns() @columns ||= []; end
+  setup :set_controller
+  setup :setup_new_user
 
-  def self.column(name, sql_type = nil, default = nil, null = true)
-    columns << ActiveRecord::ConnectionAdapters::Column.new(name.to_s, default, sql_type, null)
+  def set_controller
+    @controller = MockController.new
   end
+
+  def setup_new_user(options={})
+    @user = User.new({
+      :id => 1,
+      :name => 'New in SimpleForm!',
+      :description => 'Hello!',
+      :created_at => Time.now
+    }.merge(options))
+  end
+
+  def protect_against_forgery?
+    false
+  end
+
+  def user_path(*args)
+    '/users'
+  end
+  alias :users_path :user_path
 end

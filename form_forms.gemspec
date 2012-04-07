@@ -17,10 +17,7 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency "activesupport", "~> 3.0"
   gem.add_dependency "actionpack", "~> 3.0"
-  gem.add_dependency "railties", "~> 3.0"
   gem.add_dependency "simple_form"
 
-  gem.add_development_dependency "minitest"
-  gem.add_development_dependency "activerecord", "~> 3.0"
-  gem.add_development_dependency "sqlite3"
+  gem.add_development_dependency "activemodel", "~> 3.0"
 end

@@ -12,7 +12,7 @@ module FormForms
 
       def render(model, view)
         view.simple_form_for(model, *@form_args) do |builder|
-          render_elements(builder, controller)
+          render_elements(builder, view)
         end
       end
     end

@@ -1,20 +1,19 @@
 require 'test_helper'
 
 class FieldTest < ActionView::TestCase
-  class MockModel < ActiveRecordMock
-    column :subject, :string
-    column :description, :text
-  end
-
   setup do
-    @model = MockModel.new(:subject => "Subject", :description => "This is a text")
     @form = FormForms::Forms::Form.new do |form|
-      form.field(:subject) {|f| f.input :subject}
+      form.field(:name) {|f| f.input :name}
       form.field(:description) {|f| f.input :description}
+      form.field(:something) {|f| '<span id="something">Something</span>'.html_safe}
     end
   end
 
-  test "renders the field" do
-    @form.render(@model, self)
+  test "renders a simple_form field" do
+    concat @form.render(@user, self)
+    assert_select 'input.string#user_name'
+    assert_select 'textarea.text#user_description'
+
+    assert_select 'span#something'
   end
 end

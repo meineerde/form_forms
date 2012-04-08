@@ -108,7 +108,7 @@ module FormForms
       # +name+ can not be defined in the current form scope yet. The +before+
       # element has to exist.
       def element_before(before, name, generator)
-        before_index = @elements.index(name)
+        before_index = @elements.index(before)
 
         if @elements.include? name
           # Only allow new elements. Existing fields can be changed with #element

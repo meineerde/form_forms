@@ -63,4 +63,16 @@ class FieldTest < ActionView::TestCase
     assert_select 'form > div:nth-of-type(3) > input.string#user_name'
     assert_select 'form > div:nth-of-type(4) > textarea.text#user_description'
   end
+
+  test "delete field" do
+    with_form_for(@user) do |form|
+      form.field(:name) {|f| f.input :name}
+      form.field(:description) {|f| f.input :description}
+
+      form.delete(:description)
+    end
+
+    assert_select 'input.string#user_name'
+    assert_no_select 'textarea.text#user_description'
+  end
 end

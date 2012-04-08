@@ -25,6 +25,12 @@ module FormForms
         render_elements(builder, view)
       end
 
+      def delete(name)
+        @elements.delete(name)
+        @generators.delete(name)
+        nil
+      end
+
     protected
 
       # Allow the passed form type as a sub-element of the current form.

@@ -7,9 +7,17 @@ module FormForms
       allowed_sub_element :table_fields
 
       def initialize(fieldset_args = {})
-        @legend = proc{|f| ""}
-        @fieldset_args = fieldset_args
+        @legend = nil
+        @fieldset_args = proc{|f| fieldset_args}
         super
+      end
+
+      def args(fieldset_args={}, &generator)
+        if block_given?
+          @fieldset_args = generator
+        else
+          @fieldset_args = proc{|f| fieldset_args}
+        end
       end
 
       # Set the legend of the form. You can either set the legend directly by
@@ -31,9 +39,9 @@ module FormForms
 
       # Generate a fielset with a legend
       def render(builder, view)
-        view.content_tag :fieldset, @fieldset_args do
+        view.content_tag :fieldset, view.instance_exec(builder, &@fieldset_args) do
           buf = ActiveSupport::SafeBuffer.new
-          buf << view.content_tag(:legend, view.instance_exec(builder, &@legend))
+          buf << view.content_tag(:legend, view.instance_exec(builder, &@legend)) unless @legend.nil?
           buf << super
           buf
         end

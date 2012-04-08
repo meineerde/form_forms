@@ -9,6 +9,10 @@ module FormForms
         forms[name.to_sym] = form
       end
 
+      def delete(name)
+        forms.delete(name.to_sym)
+      end
+
       def keys
         forms.keys
       end

@@ -11,30 +11,20 @@ module FormForms
       allowed_sub_element :table_fields
 
       def initialize(form_args={})
-        @fields_for = proc{|f| nil}
-        @form_args = form_args
+        self.for{|f| nil}
+        self.args{|f| form_args}
         super
       end
 
-      def for(fields_for=nil, &generator)
-        if block_given?
-          @fields_for = generator
-        else
-          @fields_for = proc{|f| fields_for}
-        end
-      end
-
-      def for(*args)
-        @fields_for = args if args.present?
-        @fields_for
-      end
-
+      generator_arg :for, :fields_for
+      generator_arg :args, :form_args
 
       def render(model, view)
-        attr = view.instance_exec(builder, &@fields_for)
+        fields_for = view.instance_exec(builder, &self.for)
+        form_args = view.instance_exec(builder, &self.args)
 
-        view.simple_fields_for(attr, @form_args) do |builder|
-          render_elements(builder, controller)
+        view.simple_fields_for(fields_for, args) do |builder|
+          render_elements(builder, view)
         end
       end
     end

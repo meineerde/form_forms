@@ -81,6 +81,26 @@ module FormForms
         RUBY
       end
 
+      # Define an attribute of the element. Attributes can either be given as
+      # a block, similar to the fields, or as a static parameter. Internally,
+      # we always use the block form.
+      def self.generator_arg(name, instance_variable=nil)
+        instance_variable ||= name
+
+        class_eval <<-RUBY, __FILE__, __LINE__
+          def #{name}(param=indicator=true, &generator)   # def legend(param=indicator=true, &generator
+            if block_given?                               #   if block_given?
+              @#{instance_variable} = generator           #     @legend = generator
+            elsif indicator.nil?                          #   elsif indicator.nil?  # parameter was given
+              @#{instance_variable} = proc{|f| param}     #     @legend = proc{|f| param}
+            else                                          #   else
+              @#{instance_variable}                       #     @legend
+            end                                           #   end
+          end                                             # end
+        RUBY
+      end
+
+
       # Append a generic element to the end of the elements list. This method
       # is supposed tpo be called by the generated public methods of each
       # sub-element type.

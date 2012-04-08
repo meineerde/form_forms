@@ -1,6 +1,6 @@
 module FormForms
   module Forms
-    # The generic top-levelform for building a simple_form..
+    # The generic top-level form for building a simple_form..
     #
     # This class (and all its children) is only usable as a top-level form
     # as it generates its own form builder object which is passed to its
@@ -13,9 +13,22 @@ module FormForms
         super
       end
 
+      # Set the form_args. These are static as we don't have a form yet
+      def args(form_args=nil)
+        if form_args
+          @form_args = form_args
+        else
+          @form_args
+        end
+      end
+
+      # Render the form.
+      # Notice that forms receive an ActiveModel object as its first
+      # parameter, unlike elements which receive the form builder which is
+      # created by a form.
       def render(model, view)
-        view.form_for(model, @form_args) do |builder|
-          render_elements(builder, controller)
+        view.simple_form_for(model, self.args) do |builder|
+          render_elements(builder, view)
         end
       end
 

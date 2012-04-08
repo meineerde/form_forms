@@ -9,12 +9,6 @@ module FormForms
       allowed_sub_element :fieldset
       allowed_sub_element :fields
       allowed_sub_element :table_fields
-
-      def render(model, view)
-        view.simple_form_for(model, *@form_args) do |builder|
-          render_elements(builder, view)
-        end
-      end
     end
   end
 end

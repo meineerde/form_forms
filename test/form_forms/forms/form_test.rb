@@ -1,3 +1,5 @@
+require 'test_helper'
+
 module FormForms
   module Forms
     class FormTest < ActionView::TestCase

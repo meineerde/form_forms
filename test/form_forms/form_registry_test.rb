@@ -1,3 +1,5 @@
+require 'test_helper'
+
 module FormForms
   class FormRegistryTest < ActionView::TestCase
     test "set, get, and delete registered form" do

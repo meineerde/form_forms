@@ -3,7 +3,10 @@
 Column = Struct.new(:name, :type, :limit)
 Association = Struct.new(:klass, :name, :macro, :options)
 
-class Company < Struct.new(:id, :name)
+# Always use the same parent, even after multiple requires
+CompanyParent = Struct.new(:id, :name) unless defined?(CompanyParent)
+
+class Company < CompanyParent
   extend ActiveModel::Naming
   include ActiveModel::Conversion
 

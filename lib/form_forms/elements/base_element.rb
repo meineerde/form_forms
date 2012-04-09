@@ -67,7 +67,7 @@ module FormForms
             if block_given?
               element(name, #{klass}.new(*args, &block))
             else
-              @elements[name]
+              @generators[name]
             end
           end
 

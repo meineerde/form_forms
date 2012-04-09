@@ -151,13 +151,10 @@ module FormForms
 
       # Render all elements in the current
       def render_elements(builder, view, before="", after="\n")
-        buffer = ActiveSupport::SafeBuffer.new
-
-        @elements.inject(buffer) do |buffer, name|
-          buffer << before
-          buffer << @generators[name].render(builder, view)
-          buffer << after
-          buffer
+        @elements.each do |name|
+          view.concat before
+          view.concat @generators[name].render(builder, view)
+          view.concat after
         end
       end
     end

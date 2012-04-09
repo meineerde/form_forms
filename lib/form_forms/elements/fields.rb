@@ -16,8 +16,8 @@ module FormForms
         super
       end
 
-      generator_arg :for, :fields_for
-      generator_arg :args, :form_args
+      property :for, :fields_for
+      property :args, :form_args
 
       def render(model, view)
         fields_for = view.instance_exec(builder, &self.for)

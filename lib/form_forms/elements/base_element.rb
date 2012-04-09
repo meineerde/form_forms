@@ -81,10 +81,10 @@ module FormForms
         RUBY
       end
 
-      # Define an attribute of the element. Attributes can either be given as
-      # a block, similar to the fields, or as a static parameter. Internally,
+      # Define a property of the element. Properties can either be given as
+      # a block, similar to the fields, or as a static object. Internally,
       # we always use the block form.
-      def self.generator_arg(name, instance_variable=nil)
+      def self.property(name, instance_variable=nil)
         instance_variable ||= name
 
         class_eval <<-RUBY, __FILE__, __LINE__

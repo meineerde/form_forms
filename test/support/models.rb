@@ -3,6 +3,34 @@
 Column = Struct.new(:name, :type, :limit)
 Association = Struct.new(:klass, :name, :macro, :options)
 
+class Company < Struct.new(:id, :name)
+  extend ActiveModel::Naming
+  include ActiveModel::Conversion
+
+  def self.all(options={})
+    all = (1..3).map{|i| Company.new(i, "Company #{i}")}
+    return [all.first] if options[:conditions].present?
+    return [all.last] if options[:order].present?
+    return all[0..1] if options[:include].present?
+    return all[1..2] if options[:joins].present?
+    all
+  end
+
+  def self.merge_conditions(a, b)
+    (a || {}).merge(b || {})
+  end
+
+  def persisted?
+    true
+  end
+end
+
+class Tag < Company
+  def self.all(options={})
+    (1..3).map{|i| Tag.new(i, "Tag #{i}")}
+  end
+end
+
 class User
   extend ActiveModel::Naming
   include ActiveModel::Conversion
@@ -74,10 +102,6 @@ class User
         Association.new(Company, association, :belongs_to, {})
       when :tags
         Association.new(Tag, association, :has_many, {})
-      when :first_company
-        Association.new(Company, association, :has_one, {})
-      when :special_company
-        Association.new(Company, association, :belongs_to, { :conditions => { :id => 1 } })
     end
   end
 

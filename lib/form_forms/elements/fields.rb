@@ -1,9 +1,5 @@
 module FormForms
   module Elements
-    # The generic form for building a simple_form..
-    #
-    # This class is only usable as a top-level form as it generates its own
-    # form builder object
     class Fields < BaseElement
       allowed_sub_element :field
       allowed_sub_element :block
@@ -11,21 +7,21 @@ module FormForms
       allowed_sub_element :fields
       allowed_sub_element :table_fields
 
-      def initialize(form_args={})
-        self.for{|f| nil}
+      def initialize(for_field=nil, form_args={})
+        self.for{|f| for_field}
         self.args{|f| form_args}
         super
       end
 
-      property :for, :fields_for
-      property :args, :form_args
+      property :for
+      property :args
 
-      def render(model, view)
+      def render(builder, view)
         fields_for = view.instance_exec(builder, &self.for)
         form_args = view.instance_exec(builder, &self.args)
 
-        view.simple_fields_for(fields_for, args) do |builder|
-          render_elements(builder, view)
+        view.simple_fields_for(fields_for, args) do |sub_builder|
+          render_elements(sub_builder, view)
         end
       end
     end

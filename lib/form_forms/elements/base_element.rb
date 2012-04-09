@@ -60,7 +60,7 @@ module FormForms
       def self.allowed_sub_element(type, klass=nil)
         klass ||= "::FormForms::Elements::#{type.to_s.classify}"
 
-        class_eval <<-RUBY, __FILE__, __LINE__
+        class_eval <<-RUBY, __FILE__, __LINE__ + 1
           def #{type}(name, *args, &block)
             name = name.to_sym
 
@@ -87,7 +87,7 @@ module FormForms
       def self.property(name, instance_variable=nil)
         instance_variable ||= name
 
-        class_eval <<-RUBY, __FILE__, __LINE__
+        class_eval <<-RUBY, __FILE__, __LINE__ + 1
           def #{name}(param=indicator=true, &generator)   # def legend(param=indicator=true, &generator
             if block_given?                               #   if block_given?
               @#{instance_variable} = generator           #     @legend = generator

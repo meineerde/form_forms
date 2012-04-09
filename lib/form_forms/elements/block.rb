@@ -19,7 +19,7 @@ module FormForms
       def render(builder, view)
         args = view.instance_exec(builder, &self.args)
 
-        view.content_tag @name, args) do
+        view.content_tag(@name, args) do
           super
         end
       end

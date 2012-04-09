@@ -24,8 +24,8 @@ class FieldTest < ActionView::TestCase
       form.field(:something) {|f| '<span id="foo">Something</span>'}
     end
 
-    assert_no_select 'span#foo', 'Something'
-    assert_select 'form', '&lt;span id=&quot;foo&quot;&gt;Something&lt;/span&gt;'
+    assert_no_select 'span#foo'
+    assert_select 'form', /&lt;span id=&quot;foo&quot;&gt;Something&lt;\/span&gt;/
   end
 
   test "allow the usage of view helpers" do

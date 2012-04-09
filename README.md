@@ -1,11 +1,11 @@
 # FormForms
 
-Configurable forms for Rails 3, based on the excellent [simple_form](https://github.com/plataformatec/simple_form).
+Configurable forms for Rails 3, based on the excellent [simple_form](https://github.com/plataformatec/simple_form) gem.
 
-The goal is to provide forms (as in views) which are flexible enough to
-fullfill their intended usage but be able to be configured by plugins. Thus
-plugins can easily add, delete and edit form fields without having to override
-whole views which are hard to patch.
+The goal of this gem is to provide forms (as in views) which are flexible
+enough to fullfill their intended usage but be able to be configured by
+plugins. Thus plugins can easily add, delete and edit form fields without
+having to override whole views which are hard to patch.
 
 ## Installation
 
@@ -13,11 +13,9 @@ Add this line to your application's Gemfile:
 
     gem 'form_forms'
 
-And then execute:
+and then run `bundle install`.
 
-    bundle install
-
-Or install it yourself as:
+Or install it yourself using
 
     gem install form_forms
 
@@ -27,13 +25,15 @@ TODO: Write usage instructions here. For now, see the tests.
 
 ## Development
 
+[![Build Status](https://secure.travis-ci.org/meineerde/form_forms.png)](http://travis-ci.org/meineerde/form_forms)
+
 Install dependencies with
 
     bundle install
 
 then run tests with
 
-    bundle exec rake test
+    bundle exec rake
 
 ## Contributing
 

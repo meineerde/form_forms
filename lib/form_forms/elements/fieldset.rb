@@ -1,29 +1,21 @@
 module FormForms
   module Elements
-    class Fieldset < BaseElement
-      allowed_sub_element :field
-      allowed_sub_element :fieldset
-      allowed_sub_element :fields
-      allowed_sub_element :table_fields
-
-      def initialize(fieldset_args = {})
+    class Fieldset < Block
+      def initialize(fieldset_args={}, &generator)
         self.legend{|f| nil}
-        self.args{|f| fieldset_args}
-        super
+        super(:fieldset, fieldset_args, &generator)
       end
 
-      property :args
       property :legend
 
       # Generate a fielset with a legend
       def render(builder, view)
+        args = view.instance_exec(builder, &self.args)
         legend = view.instance_exec(builder, &self.legend)
 
-        view.content_tag :fieldset, view.instance_exec(builder, &self.args) do
-          buf = ActiveSupport::SafeBuffer.new
-          buf << view.content_tag(:legend, legend) unless legend.nil?
-          buf << super
-          buf
+        view.content_tag :fieldset, args) do
+          view.concat view.content_tag(:legend, legend) unless legend.nil?
+          view.concat render_elements(builder, view)
         end
       end
     end

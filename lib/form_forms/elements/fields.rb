@@ -6,6 +6,7 @@ module FormForms
     # form builder object
     class Fields < BaseElement
       allowed_sub_element :field
+      allowed_sub_element :block
       allowed_sub_element :fieldset
       allowed_sub_element :fields
       allowed_sub_element :table_fields

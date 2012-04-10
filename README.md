@@ -1,4 +1,4 @@
-# FormForms
+# FormForms [![Build Status](https://secure.travis-ci.org/meineerde/form_forms.png)](http://travis-ci.org/meineerde/form_forms) [![Dependency Status](https://gemnasium.com/meineerde/form_forms.png?travis)](https://gemnasium.com/meineerde/form_forms)
 
 Configurable forms for Rails 3, based on the excellent [simple_form](https://github.com/plataformatec/simple_form) gem.
 
@@ -24,8 +24,6 @@ Or install it yourself using
 TODO: Write usage instructions here. For now, see the tests.
 
 ## Development
-
-[![Build Status](https://secure.travis-ci.org/meineerde/form_forms.png)](http://travis-ci.org/meineerde/form_forms)
 
 Install dependencies with
 

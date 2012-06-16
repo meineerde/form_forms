@@ -1,17 +1,17 @@
 # Most of of this is "stolen" from simple_form
 
-class Column < Struct.new(:name, :type, :limit)
+# Always use the same parent, even after multiple requires
+ColumnParent = Struct.new(:name, :type, :limit) unless defined?(ColumnParent)
+class Column < ColumnParent
   def number?
     type == :integer
   end
 end
 
-
 Association = Struct.new(:klass, :name, :macro, :options)
 
 # Always use the same parent, even after multiple requires
 CompanyParent = Struct.new(:id, :name) unless defined?(CompanyParent)
-
 class Company < CompanyParent
   extend ActiveModel::Naming
   include ActiveModel::Conversion

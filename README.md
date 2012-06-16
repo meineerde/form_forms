@@ -195,19 +195,21 @@ rendered. For the example above, the `User` model is defined as follows:
     end
 
 The third argument is an options hash which is passed to association render
-function of simple_form. In our example, we pass the `:collection` attribute
-which instructs simple_form to render a select box containing the elements of
-the passed collection.
+function of simple_form. And finally we have the generator block which works
+the same as for fieldsets and blocks.
 
-Here we have to do a little trick. If we simple pass the array here as in
+In our example above, we pass the `:collection` attribute in the options
+which instructs simple_form to render a select box containing the elements
+of the passed collection. Here we have to do a little trick. If we simple
+pass the array of tags here as in
 
     form.fields(:tags, :tags, :collection => Tag.all) do |tags|
 
 the `Tags.all` would be evaluated just once, during the initialization of the
-application. New tags would not be included. To fix this, we pass a
-lambda block which is evaluated each time again during the form rendering.
-This lambda is expected to return an array of options to the `association`
-method of simple_form.
+application. New tags created later would not be included. To fix this, we
+pass a `lambda` block which is evaluated each time again during the form
+rendering. This lambda is expected to return an array of options to the
+`association` method of simple_form.
 
 # Development
 

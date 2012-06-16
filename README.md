@@ -167,10 +167,17 @@ markup the form using custom CSS rules. This element works similar to the
 
     FormForms::Registry[:user] = FormForms::Form.new() do |form|
       form.field(:street) {|f| f.input :street }
-      form.block(:box, :class => "red-and-blinky") do |block|
+      form.block(:box, :div, :class => "red-and-blinky") do |block|
         block.field(:sell_your_soul) {|f| f.input :sell_your_soul}
       end
     end
+
+Here, the block element takes the name of the newly created element, the type
+of HTML tag to create and a hash of options to pass to the `content_tag`
+helper of ´Rails which creates the tag internally.
+
+The generator block creates a new element scope similar to the fieldset
+element.
 
 ## `fields`
 

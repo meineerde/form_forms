@@ -208,8 +208,8 @@ pass the array of tags here as in
 the `Tags.all` would be evaluated just once, during the initialization of the
 application. New tags created later would not be included. To fix this, we
 pass a `lambda` block which is evaluated each time again during the form
-rendering. This lambda is expected to return an array of options to the
-`association` method of simple_form.
+rendering. This lambda is expected to return a hash of options which is
+passed to the `association` method of simple_form.
 
 # Development
 

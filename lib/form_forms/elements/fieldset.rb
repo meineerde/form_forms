@@ -10,8 +10,8 @@ module FormForms
 
       # Generate a fielset with a legend
       def render(builder, view)
-        args = view.instance_exec(builder, &self.args)
-        legend = view.instance_exec(builder, &self.legend)
+        args = eval_property(:args, builder, view)
+        legend = eval_property(:legend, builder, view)
 
         view.content_tag(:fieldset, args) do
           view.concat view.content_tag(:legend, legend) unless legend.nil?

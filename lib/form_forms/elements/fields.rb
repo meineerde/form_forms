@@ -17,8 +17,8 @@ module FormForms
       property :args
 
       def render(builder, view)
-        association = view.instance_exec(builder, &self.association)
-        form_args = view.instance_exec(builder, &self.args)
+        association = eval_property(:association, builder, view)
+        form_args = eval_property(:args, builder, view)
 
         builder.association(association, form_args) do |sub|
           render_elements(sub, view)

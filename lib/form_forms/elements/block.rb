@@ -17,7 +17,7 @@ module FormForms
 
       # Generate a fielset with a legend
       def render(builder, view)
-        args = view.instance_exec(builder, &self.args)
+        args = eval_property(:args, builder, view)
 
         view.content_tag(@element, args) do
           super

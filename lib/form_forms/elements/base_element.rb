@@ -92,8 +92,7 @@ module FormForms
             if block_given?                               #   if block_given?
               @#{instance_variable} = generator           #     @legend = generator
             elsif indicator.nil?                          #   elsif indicator.nil?  # parameter was given
-              generator = param.is_a?(Proc) ? param : lambda{|f| param}
-              @#{instance_variable} = generator           #     @legend = generator
+              @#{instance_variable} = param               #     @legend = param
             else                                          #   else
               @#{instance_variable}                       #     @legend
             end                                           #   end
@@ -101,6 +100,18 @@ module FormForms
         RUBY
       end
 
+      # Get the actual value of a parameter. If the parameter was set with a
+      # block or a lambda, evaluate the lambda in the context of the view
+      # and return the result. This can be used for delayed evaluation of
+      # parameter arguments.
+      def eval_property(name, builder, view)
+        property = self.send(name.to_sym)
+        if property.is_a?(Proc)
+          view.instance_exec(builder, &property)
+        else
+          property
+        end
+      end
 
       # Append a generic element to the end of the elements list. This method
       # is supposed tpo be called by the generated public methods of each

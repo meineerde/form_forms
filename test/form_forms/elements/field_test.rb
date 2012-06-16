@@ -42,12 +42,14 @@ class FieldTest < ActionView::TestCase
       form.field(:description) {|f| f.input :description}
 
       form.field_after(:name, :credit_card) {|f| f.input :credit_card}
+      form.field_last(:active) {|f| f.input :active}
     end
 
     # the first div in a form contains some hidden fields
     assert_select 'form > div:nth-of-type(2) > input.string#user_name'
     assert_select 'form > div:nth-of-type(3) > input.string#user_credit_card'
     assert_select 'form > div:nth-of-type(4) > textarea.text#user_description'
+    assert_select 'form > div:nth-of-type(5) > input.boolean#user_active'
   end
 
   test "allow prepending elements" do
@@ -55,13 +57,31 @@ class FieldTest < ActionView::TestCase
       form.field(:name) {|f| f.input :name}
       form.field(:description) {|f| f.input :description}
 
-      form.field_before(:name, :credit_card) {|f| f.input :credit_card}
+      form.field_first(:active) {|f| f.input :active}
+      form.field_before(:description, :credit_card) {|f| f.input :credit_card}
     end
 
     # the first div in a form contains some hidden fields
-    assert_select 'form > div:nth-of-type(2) > input.string#user_credit_card'
+    assert_select 'form > div:nth-of-type(2) > input.boolean#user_active'
     assert_select 'form > div:nth-of-type(3) > input.string#user_name'
-    assert_select 'form > div:nth-of-type(4) > textarea.text#user_description'
+    assert_select 'form > div:nth-of-type(4) > input.string#user_credit_card'
+    assert_select 'form > div:nth-of-type(5) > textarea.text#user_description'
+  end
+
+  test "check existence of elements when inserting" do
+    assert_raise ArgumentError do
+      with_form_for(@user) do |form|
+        form.field(:name) {|f| f.input :name}
+        form.field_before(:description, :credit_card) {|f| f.input :credit_card}
+      end
+    end
+
+    assert_raise ArgumentError do
+      with_form_for(@user) do |form|
+        form.field(:name) {|f| f.input :name}
+        form.field_after(:description, :credit_card) {|f| f.input :credit_card}
+      end
+    end
   end
 
   test "delete field" do

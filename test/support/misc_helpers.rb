@@ -5,8 +5,11 @@ module MiscHelpers
 
   def with_form_for(object, *args, &block)
     form = FormForms::Forms::Form.new(*args, &(block || proc {}))
-    rendered = form.render(object, self)
-    # p rendered
-    concat rendered
+    @rendered = form.render(object, self)
+    concat @rendered
+  end
+
+  def rendered
+    @rendered
   end
 end

@@ -70,6 +70,11 @@ module FormForms
               @generators[name]
             end
           end
+          alias_method :#{type}_last, :#{type}
+
+          def #{type}_first(name, *args, &block)
+            element_before(nil, name.to_sym, #{klass}.new(*args, &block))
+          end
 
           def #{type}_before(before, name, *args, &block)
             element_before(before.to_sym, name.to_sym, #{klass}.new(*args, &block))
@@ -122,17 +127,20 @@ module FormForms
       end
 
       # Insert an element directly after an existing alement. The element
-      # +name+ can not be defined in the current form scope yet. If the
-      # +after+ element does not exist, the new element is added at the end
-      # of the element list.
+      # +name+ can not be defined in the current form scope yet. The +after+
+      # element has to exist or be nil. If it is nil, the new element is
+      # appended to the end of the element list.
       def element_after(after, name, generator)
         if @elements.include? name
           # Only allow new elements. Existing fields can be changed with #element
           raise ArgumentError.new("#{name} is already registered.")
         end
 
-        after_index = @elements.index(after.to_sym)
-        if after_index.nil? || after_index == @elements.length-1
+        after_index = @elements.index(after)
+        if !after.nil? && after_index.nil?
+          # This method makes only sense if the before element actually exists
+          raise ArgumentError.new("#{after} is not registered. I can't insert after it.")
+        elsif after.nil? || after_index == @elements.length-1
           # Append at the end
           element(name, generator)
         else
@@ -144,20 +152,27 @@ module FormForms
 
       # Inserts an element directly before an existing alement. The element
       # +name+ can not be defined in the current form scope yet. The +before+
-      # element has to exist.
+      # element has to exist or be nil. If it is nil, the new element is added
+      # at the very beginning of the list.
       def element_before(before, name, generator)
         before_index = @elements.index(before)
 
         if @elements.include? name
           # Only allow new elements. Existing fields can be changed with #element
           raise ArgumentError.new("#{name} is already registered.")
-        elsif before_index.nil?
+        elsif !before.nil? && before_index.nil?
           # This method makes only sense if the before element actually exists
           raise ArgumentError.new("#{before} is not registered. I can't insert before it.")
         end
 
         # Perform an insert
-        @elements.insert(before_index, name)
+        if before.nil?
+          # insert at the beginning of the list
+          @elements.unshift(name)
+        else
+          # insert the element before the named one
+          @elements.insert(before_index, name)
+        end
         @generators[name] = generator
       end
 

@@ -92,7 +92,8 @@ module FormForms
             if block_given?                               #   if block_given?
               @#{instance_variable} = generator           #     @legend = generator
             elsif indicator.nil?                          #   elsif indicator.nil?  # parameter was given
-              @#{instance_variable} = proc{|f| param}     #     @legend = proc{|f| param}
+              generator = param.is_a?(Proc) ? param : lambda{|f| param}
+              @#{instance_variable} = generator           #     @legend = generator
             else                                          #   else
               @#{instance_variable}                       #     @legend
             end                                           #   end

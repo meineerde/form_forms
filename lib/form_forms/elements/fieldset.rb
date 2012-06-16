@@ -2,7 +2,7 @@ module FormForms
   module Elements
     class Fieldset < Block
       def initialize(fieldset_args={}, &generator)
-        self.legend{|f| nil}
+        self.legend nil
         super(:fieldset, fieldset_args, &generator)
       end
 

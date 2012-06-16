@@ -7,9 +7,9 @@ module FormForms
       allowed_sub_element :fields
       allowed_sub_element :table_fields
 
-      def initialize(name, args = {})
-        @name = name.to_sym
-        self.args{|f| args}
+      def initialize(element, args = {})
+        @element = element.to_sym
+        self.args args
         super
       end
 
@@ -19,7 +19,7 @@ module FormForms
       def render(builder, view)
         args = view.instance_exec(builder, &self.args)
 
-        view.content_tag(@name, args) do
+        view.content_tag(@element, args) do
           super
         end
       end

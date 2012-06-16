@@ -8,16 +8,16 @@ module FormForms
       allowed_sub_element :table_fields
 
       def initialize(association=nil, form_args={})
-        self.for{|f| association}
-        self.args{|f| form_args}
+        self.association association
+        self.args form_args
         super
       end
 
-      property :for
+      property :association
       property :args
 
       def render(builder, view)
-        association = view.instance_exec(builder, &self.for)
+        association = view.instance_exec(builder, &self.association)
         form_args = view.instance_exec(builder, &self.args)
 
         builder.association(association, form_args) do |sub|

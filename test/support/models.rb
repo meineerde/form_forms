@@ -1,6 +1,12 @@
-# All of this is stolen from simple_form
+# Most of of this is "stolen" from simple_form
 
-Column = Struct.new(:name, :type, :limit)
+class Column < Struct.new(:name, :type, :limit)
+  def number?
+    type == :integer
+  end
+end
+
+
 Association = Struct.new(:klass, :name, :macro, :options)
 
 # Always use the same parent, even after multiple requires

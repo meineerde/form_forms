@@ -1,7 +1,7 @@
 module FormForms
   module Elements
     class Fields < SubForm
-      def initialize(association=nil, form_args={})
+      def initialize(association, form_args={})
         self.association association
         self.args form_args
         super
@@ -14,8 +14,8 @@ module FormForms
         association = eval_property(:association, builder, view)
         form_args = eval_property(:args, builder, view)
 
-        builder.association(association, form_args) do |sub|
-          render_elements(sub, view)
+        builder.association(association, form_args) do |sub_builder|
+          super(sub_builder, view)
         end
       end
     end

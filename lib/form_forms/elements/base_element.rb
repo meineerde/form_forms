@@ -58,7 +58,8 @@ module FormForms
       #   # => [:subject, :name, :description]
 
       def self.allowed_sub_element(type, klass=nil)
-        klass ||= "::FormForms::Elements::#{type.to_s.classify}"
+        klass ||= element_class_name(type)
+        klass = klass.name if klass.is_a?(Class)
 
         class_eval <<-RUBY, __FILE__, __LINE__ + 1
           def #{type}(name, *args, &block)
@@ -84,6 +85,10 @@ module FormForms
             element_after(after.to_sym, name.to_sym, #{klass}.new(*args, &block))
           end
         RUBY
+      end
+
+      def self.element_class_name(type)
+        "::FormForms::Elements::#{type.to_s.classify}"
       end
 
       # Define a property of the element. Properties can either be given as

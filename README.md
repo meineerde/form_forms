@@ -35,10 +35,6 @@ during initialization. During rendering of a request, the view simply
 retrieves an existing form definition and renders that form by parameterizing
 it with some data object (e.g. an ActiveRecord model instance).
 
-To handle several forms, form_forms ships with a simple registry. If you
-need a more powerful system, you are of course free to handle your form
-objects in any other way.
-
 ## Defining Forms
 
     FormForms::Registry[:my_form] = FormForms::Form.new() do |form|
@@ -69,6 +65,22 @@ The form can be rendered in a view by using something like this:
 The render method takes two parameters: the model object that should be used
 as the base object for the form and a view instance (which can be almost
 always passed as `self`). The view instance is used to render the form fields.
+
+## Form Registry
+
+To handle several forms, form_forms ships with a simple registry. If you
+need a more powerful system, you are of course free to handle your form
+objects in any other way.
+
+The default registry provides a hash-like interface on the
+`FormForms::Registry` class. You can either directly assign form objects to
+keys there as shown above or you can use the `register` method of all `Form`
+classes as a shorthand:
+
+    FormForms::Form.register(:my_name) do |form|
+      # form definition
+      # [...]
+    end
 
 ## Adapting an existing form from plugins
 

@@ -95,4 +95,15 @@ class FieldTest < ActionView::TestCase
     assert_select 'input.string#user_name'
     assert_no_select 'textarea.text#user_description'
   end
+
+  test "replace a field's generator" do
+    with_form_for(@user) do |form|
+      form.field(:name) {|f| f.input :name}
+
+      form.field(:name).generator {|f| f.input :description}
+    end
+
+    assert_no_select 'input.string#user_name'
+    assert_select 'textarea.text#user_description'
+  end
 end

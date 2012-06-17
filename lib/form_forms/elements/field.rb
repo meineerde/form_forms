@@ -19,13 +19,15 @@ module FormForms
     #       end
     #     end
     #   end
-    class Field
+    class Field < BaseElement
       def initialize(&generator)
-        @generator = generator
+        self.generator generator
       end
 
+      property :generator
+
       def render(builder, view)
-        view.instance_exec(builder, &@generator)
+        eval_property(:generator, builder, view)
       end
     end
   end

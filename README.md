@@ -9,7 +9,7 @@ plugins. Thus plugins can easily add, delete and edit form fields without
 having to override whole views (which are almost impossible to patch) or
 having to monkey patch existing code which is hard to maintain.
 
-form_forms is originally intended to be used with the simple_form gem and uses
+FormForms is originally intended to be used with the simple_form gem and uses
 its API in several of its shipped element definitions. While it is possible
 to not use those and provide custom definitions, we require simple_form as
 a dependency right now.
@@ -28,7 +28,7 @@ Or install it yourself using
 
 # Usage
 
-form_forms is built around the idea that a Rails application is able to
+FormForms is built around the idea that a Rails application is able to
 define arbitrary forms using a simple yet powerful DSL. These form
 definitions are typically contained in the `lib` directory and are loaded
 during initialization. During rendering of a request, the view simply
@@ -68,7 +68,7 @@ always passed as `self`). The view instance is used to render the form fields.
 
 ## Form Registry
 
-To handle several forms, form_forms ships with a simple registry. If you
+To handle several forms, FormForms ships with a simple registry. If you
 need a more powerful system, you are of course free to handle your form
 objects in any other way.
 
@@ -119,7 +119,7 @@ list, preventing it from rendering:
 
 # Element Types
 
-form_forms already ships with different element types which allow you to
+FormForms already ships with different element types which allow you to
 create most of the common form elements. These elements are used to define
 the actual form body.
 

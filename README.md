@@ -254,6 +254,71 @@ pass a `lambda` block which is evaluated each time again during the form
 rendering. This lambda is expected to return a hash of options which is
 passed to the `association` method of simple_form.
 
+## `table_fields`
+
+The `table_fields` element allows to render a nested association in a table.
+This is especially suitable for editing a large amount of nested objects.
+
+For additional forms functionality, you might want to use
+[cocoon](https://github.com/nathanvda/cocoon) which adds some JQuery functions
+to manipulate table rows in the browser (e.g. add or delete rows).
+
+    FormForms::Registry[:user] = FormForms::Form.new() do |form|
+      form.field(:name) {|f| f.input :name}
+
+      form.table_fields(:companies, :companies) do |table|
+        table.header do |header|
+          header.field(:name) {|f| "Name" }
+          header.field(:location) {|f| "Location" }
+          header.field(:description) {|f| "Description" }
+          header.field(:actions, :class => "actions") {|f| "Actions" }
+        end
+
+        # each data row gets these attributes
+        table.row_args({:class => "nested-fields"})
+
+        table.field(:name) {|f| f.input :name}
+        table.field(:location) {|f| f.input :location}
+        table.field(:description) {|f| f.input :description}
+
+        table.sub_form(:actions) do |actions|
+          # Each cell in the actions column gets a custom class
+          actions.cell_args ({:class => "actions"})
+
+          actions.field(:delete) {|f| content_tag(:a, :href => "#") { "Delete" } }
+          actions.field(:id) {|f| f.hidden_field :id }
+        end
+      end
+    end
+
+For rendering a tabular form for an association, call `table_fields` with the
+form element name and the name of the association. Optionally you can add
+additional options which get passed to the simple_form `association` method.
+
+In the `table_fields` generator, you have to define header and body fields.
+You can use and element type for each of the fields. You just have to make
+sure that the number of elements in the header and the body matches.
+
+The `table_fields` environment slightly adapts all nested elements. To be
+able to adapt the generated `<th` and `<td>` tags, each element has an
+additional property called `cell_args`. If you set it to a hash, you can set
+any HTML attributes of the generated cell tag. As before, you can also pass a
+proc which return a hash for lazy evaluation.
+
+Each element in the table body gets automatically wrapped in a `<td>` tag.
+Each element in the association collection is rendered as s single row.
+
+To customize the table, you can use the following properties:
+
+* `table.args`: Hash of additional arguments for specifying the simple_form association.
+* `table.table_args`: Hash of HTML attributes of the `<table>` tag.
+* `table.row_args`: Hash of HTML attributes of each `<tr>` tag.
+* `table.<element>.cell_args`: Hash of HTML attributes of the `<td>` tag for a field in a row.
+
+* `table.header`
+  * `table.header.row_args`: Hash of HTML attributes of the header row
+  * `table.header.<element>.cell_args`: Hash of HTML attributes of the `<th>` tag for a field in the header row
+
 # Development
 
 Install dependencies with

@@ -76,6 +76,10 @@ class User
     !@new_record
   end
 
+  def companies
+    Company.all
+  end
+
   def company_attributes=(*)
   end
 

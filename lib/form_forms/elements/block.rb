@@ -1,12 +1,6 @@
 module FormForms
   module Elements
-    class Block < BaseElement
-      allowed_sub_element :field
-      allowed_sub_element :block
-      allowed_sub_element :fieldset
-      allowed_sub_element :fields
-      allowed_sub_element :table_fields
-
+    class Block < SubForm
       def initialize(element, args = {})
         @element = element.to_sym
         self.args args

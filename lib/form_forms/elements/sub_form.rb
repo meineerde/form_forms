@@ -1,10 +1,6 @@
 module FormForms
-  module Forms
-    # The generic form for building a simple_form..
-    #
-    # This class is only usable as a top-level form as it generates its own
-    # form builder object
-    class Form < BaseForm
+  module Elements
+    class SubForm < BaseElement
       allowed_sub_element :field
       allowed_sub_element :sub_form
       allowed_sub_element :block

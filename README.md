@@ -142,12 +142,36 @@ simple_form object. Alternatively to a block, you can also directly pass a
 string which will be emitted as-is. The usual HTML escape rules apply, i.e.
 you have to use `html_save` correctly to avoid rendering unsafe data.
 
+## `sub_form`
+
+Almost all the other element types create a sub form. It allows to group
+several sub elements into a single named element. While the `sub_form` acts
+as a prototype for all other scoping elements (see below) which typically
+surround child elements with HTML block tags during rendering, `sub_form`
+just creates a logical scope in the form and doesn't affect rendering in any
+way.
+
+It allows you to group several sub-elements which can then handled as a
+single element.
+
+    FormForms::Registry[:user] = FormForms::Form.new() do |form|
+      form.field(:street) {|f| f.input :street }
+      form.field(:city) {|f| f.input :city }
+      form.sub_form(:payment) do |sub_form|
+        sub_form.field(:credit_card) {|f| f.input :credit_card}
+        sub_form.field(:ccv) {|f| f.input :ccv}
+      end
+    end
+
+During rendering, this example will generate the four forms exactly the same
+as if they all would have been defined directly on the form.
+
 ## `fieldset`
 
 A fieldset is used to group fields in a single form. During rendering, this
-elements will create an HTML `<fieldset>` tag and a `<legend>`. As a fieldset
-naturally contains  other fields, its generator block can be used to define
-fields.
+elements will create an HTML `<fieldset>` tag and a `<legend>` around its
+sub-elements. As a fieldset naturally contains other fields, its generator
+block can be used to define fields.
 
     FormForms::Registry[:user] = FormForms::Form.new() do |form|
       form.field(:street) {|f| f.input :street }

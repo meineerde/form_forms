@@ -1,11 +1,14 @@
 module FormForms
   module Elements
-    class Fieldset < Block
-      def initialize(fieldset_args={}, &generator)
+    class Fieldset < SubForm
+      def initialize(args={}, &generator)
         self.legend nil
-        super(:fieldset, fieldset_args, &generator)
+        self.args args
+
+        super
       end
 
+      property :args
       property :legend
 
       # Generate a fielset with a legend

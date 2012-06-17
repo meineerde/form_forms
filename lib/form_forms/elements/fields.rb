@@ -1,12 +1,6 @@
 module FormForms
   module Elements
-    class Fields < BaseElement
-      allowed_sub_element :field
-      allowed_sub_element :block
-      allowed_sub_element :fieldset
-      allowed_sub_element :fields
-      allowed_sub_element :table_fields
-
+    class Fields < SubForm
       def initialize(association=nil, form_args={})
         self.association association
         self.args form_args

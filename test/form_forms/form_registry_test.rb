@@ -10,7 +10,7 @@ module FormForms
       FormRegistry['foo'] = form
       assert_equal FormRegistry['foo'], form
       assert_equal FormRegistry[:foo], form
-      assert_includes FormRegistry.keys, 'foo'
+      assert FormRegistry.keys.include?('foo'), "Expected FormRegistry.keys to include 'foo'"
 
       FormRegistry.delete('foo')
       assert_nil FormRegistry['foo']

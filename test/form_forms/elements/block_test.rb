@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class FieldsetTest < ActionView::TestCase
+class BlockTest < ActionView::TestCase
   test "create a block" do
     with_form_for(@user) do |form|
       form.block(:red_box, :div, :class => "red_box") do |block|

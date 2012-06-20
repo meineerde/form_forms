@@ -1,24 +1,19 @@
+require 'active_support/hash_with_indifferent_access'
+
 module FormForms
   class FormRegistry
     class << self
-      def [](name)
-        forms[name.to_sym]
+      def method_missing(method, *args, &block)
+        if forms.respond_to?(method)
+          forms.send(method, *args, &block)
+        else
+          super
+        end
       end
 
-      def []=(name, form)
-        forms[name.to_sym] = form
-      end
-
-      def delete(name)
-        forms.delete(name.to_sym)
-      end
-
-      def keys
-        forms.keys
-      end
     protected
       def forms
-        @forms ||= {}
+        @forms ||= HashWithIndifferentAccess.new
       end
     end
   end

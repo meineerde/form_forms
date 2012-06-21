@@ -1,10 +1,6 @@
 module FormForms
   module Forms
     # The generic top-level form for building a simple_form..
-    #
-    # This class (and all its children) is only usable as a top-level form
-    # as it generates its own form builder object which is passed to its
-    # sub-elements on rendering
     class BaseForm < FormForms::Elements::BaseElement
       # +form_args+ are passed to the initializer of the form builder.
       # They can be used to override its defaults.
@@ -23,13 +19,11 @@ module FormForms
       end
 
       # Render the form.
-      # Notice that forms receive an ActiveModel object as its first
-      # parameter, unlike elements which receive the form builder which is
-      # created by a form.
-      def render(model, view)
-        view.simple_form_for(model, self.args) do |builder|
-          render_elements(builder, view)
-        end
+      #
+      # This method needs to be overridden in a child class different
+      # concrete form types recieve different parameters for render
+      def render(*)
+        raise NotImplementedError.new("Implement a render function in a subclass")
       end
 
       def self.register(name, form_args={}, &generator)

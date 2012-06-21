@@ -58,14 +58,6 @@ to the field definition. Using this name, plugins can later change or remove
 individual fields. As such, the name of each field has to be unique on each
 level of the form.
 
-The form can be rendered in a view by using something like this:
-
-    <%= FormForms::Registry[:my_form].render(@model, self) %>
-
-The render method takes two parameters: the model object that should be used
-as the base object for the form and a view instance (which can be almost
-always passed as `self`). The view instance is used to render the form fields.
-
 ## Form Registry
 
 To handle several forms, FormForms ships with a simple registry. If you
@@ -116,6 +108,41 @@ element as its parameter. It complete deletes this element from the element
 list, preventing it from rendering:
 
     FormForms::Registry[:my_form].delete(:salutation)
+
+# Form types
+
+## `FormForms::Forms::Form`
+
+The most common form of a form is the, well, the form. It creates a HTML form
+for a single ActiveModel instance.
+
+The form can be rendered in a view by using something like this:
+
+    <%= FormForms::Registry[:my_form].render(@model, self) %>
+
+The `render` method takes two parameters: the model object that should be used
+as the base object for the form and a view instance (which can be almost
+always passed as `self`). The view instance is used to render the form fields.
+
+## `FormForms::Forms::Plain`
+
+The plain form allows to use FormForms to define a simple block of elements.
+It does not use a model instance and thus does not define a form builder. It
+can be used to generate  several blocks of pre-defined views which can be
+extended and adapted by plugins.
+
+This form type can be rendered in a view by sing something like this:
+
+    <%= FormForms::Registry[:plain_form].render(self) %>
+
+The `render` method takes only one parameter: the view instance that is used
+to render the elements. Note that as we don't have a form builder here, the
+first argument to each element's generator block is `nil`.
+
+This form type only supports a subset of elements to be used within it. It
+does not support `fields` and `table_fields` as they require an actual
+ActiveModel object for rendering. See below for more information about the
+various element types.
 
 # Element Types
 

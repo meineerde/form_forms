@@ -77,7 +77,7 @@ The default registry provides a hash-like interface on the
 keys there as shown above or you can use the `register` method of all `Form`
 classes as a shorthand:
 
-    FormForms::Form.register(:my_name) do |form|
+    FormForms::Forms::Form.register(:my_name) do |form|
       # form definition
       # [...]
     end

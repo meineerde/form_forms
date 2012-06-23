@@ -1,3 +1,4 @@
+require 'form_forms/mixins'
 require 'form_forms/elements'
 require 'form_forms/forms'
 

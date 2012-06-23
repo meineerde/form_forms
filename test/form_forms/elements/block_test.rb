@@ -29,4 +29,38 @@ class BlockTest < ActionView::TestCase
     assert_select 'form > div#main > fieldset#payment > legend', "These are some fields"
     assert_select 'form > div#main > fieldset#payment input.string#user_credit_card'
   end
+
+  test "render conditionally with if" do
+    with_form_for(@user) do |form|
+      form.block(:name, :div, :id => :name) do |block|
+        block.if { false }
+        block.field(:name) {|f| f.input :name}
+      end
+
+      form.block(:credit_card, :div, :id => :credit_card) do |block|
+        block.if { true }
+        block.field(:credit_card) {|f| f.input :credit_card}
+      end
+    end
+
+    assert_no_select 'form > div > input.string#user_name'
+    assert_select 'form > div#credit_card input.string#user_credit_card'
+  end
+
+  test "render conditionally with unless" do
+    with_form_for(@user) do |form|
+      form.block(:name, :div, :id => :name) do |block|
+        block.unless { true }
+        block.field(:name) {|f| f.input :name}
+      end
+
+      form.block(:credit_card, :div, :id => :credit_card) do |block|
+        block.unless { false }
+        block.field(:credit_card) {|f| f.input :credit_card}
+      end
+    end
+
+    assert_no_select 'form > div > input.string#user_name'
+    assert_select 'form > div#credit_card input.string#user_credit_card'
+  end
 end

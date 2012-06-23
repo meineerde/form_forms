@@ -11,10 +11,11 @@ module FormForms
 
       # Generate a fielset with a legend
       def render(builder, view)
-        args = eval_property(:args, builder, view)
+        return unless render_me?(builder, view)
 
+        args = eval_property(:args, builder, view)
         view.content_tag(@element, args) do
-          super
+          render_elements(builder, view)
         end
       end
     end

@@ -1,8 +1,9 @@
 module FormForms
   module Elements
     class TableFields < BaseElement
-    protected
+      include FormForms::Mixins::ConditionalRendering
 
+    protected
       # For an allowed_sub_element, create a subclass which renders the
       # element as a table cell. It wrapps the rendering of the original
       # element in an HTML td tag.

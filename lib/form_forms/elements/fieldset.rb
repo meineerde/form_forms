@@ -13,6 +13,8 @@ module FormForms
 
       # Generate a fielset with a legend
       def render(builder, view)
+        return unless render_me?(builder, view)
+
         args = eval_property(:args, builder, view)
         legend = eval_property(:legend, builder, view)
 

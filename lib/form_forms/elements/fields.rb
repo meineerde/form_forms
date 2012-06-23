@@ -11,11 +11,13 @@ module FormForms
       property :args
 
       def render(builder, view)
+        return unless render_me?(builder, view)
+
         association = eval_property(:association, builder, view)
         form_args = eval_property(:args, builder, view)
 
         builder.association(association, form_args) do |sub_builder|
-          super(sub_builder, view)
+          render_elements(sub_builder, view)
         end
       end
     end

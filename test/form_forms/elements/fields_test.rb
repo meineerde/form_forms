@@ -54,4 +54,50 @@ class FieldsTest < ActionView::TestCase
     assert_select 'input.string#user_tags_attributes_0_name'
     assert_select 'input.string#user_tags_attributes_0_id'
   end
+
+  test "render conditionally with if" do
+    with_form_for(@user) do |form|
+      form.fields(:tags1, :tags) do |tags|
+        tags.if { false }
+
+        tags.block(:block, :div, :class => 'tags1') do |block|
+          block.field(:name) {|f| f.input :name, :id => "tags1"}
+        end
+      end
+
+      form.fields(:tags2, :tags) do |tags|
+        tags.if { true }
+
+        tags.block(:block, :div, :class => 'tags2') do |block|
+          block.field(:name) {|f| f.input :name, :id => "tags2"}
+        end
+      end
+    end
+
+    assert_no_select 'form > div.tags1'
+    assert_select 'form > div.tags2 input.string#user_tags_attributes_0_name'
+  end
+
+  test "render conditionally with unless" do
+    with_form_for(@user) do |form|
+      form.fields(:tags1, :tags) do |tags|
+        tags.unless { true }
+
+        tags.block(:block, :div, :class => 'tags1') do |block|
+          block.field(:name) {|f| f.input :name, :id => "tags1"}
+        end
+      end
+
+      form.fields(:tags2, :tags) do |tags|
+        tags.unless { false }
+
+        tags.block(:block, :div, :class => 'tags2') do |block|
+          block.field(:name) {|f| f.input :name, :id => "tags2"}
+        end
+      end
+    end
+
+    assert_no_select 'form > div.tags1'
+    assert_select 'form > div.tags2 input.string#user_tags_attributes_0_name'
+  end
 end

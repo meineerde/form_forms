@@ -5,7 +5,7 @@ class FieldsTest < ActionView::TestCase
     with_form_for(@user) do |form|
       form.field(:name) {|f| f.input :name}
 
-      form.fields(:tags, :tags, :collection => Tag.all) do |tags|
+      form.fields(:tags, :tags) do |tags|
         tags.field(:name) {|f| f.input :name}
       end
     end
@@ -42,7 +42,7 @@ class FieldsTest < ActionView::TestCase
     with_form_for(@user) do |form|
       form.field(:name) {|f| f.input :name}
 
-      form.fields(:tags, :tags, :collection => Tag.all) do |tags|
+      form.fields(:tags, :tags) do |tags|
         tags.field(:name) {|f| f.input :name}
       end
 

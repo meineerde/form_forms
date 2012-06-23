@@ -80,6 +80,10 @@ class User
     Company.all
   end
 
+  def tags
+    Tag.all
+  end
+
   def company_attributes=(*)
   end
 

@@ -88,7 +88,7 @@ module FormForms
       end
 
       def self.element_class_name(type)
-        "::FormForms::Elements::#{type.to_s.classify}"
+        "::FormForms::Elements::#{type.to_s.camelize}"
       end
 
       # Define a property of the element. Properties can either be given as

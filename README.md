@@ -1,6 +1,10 @@
-# FormForms [![Build Status](https://secure.travis-ci.org/meineerde/form_forms.png)](http://travis-ci.org/meineerde/form_forms) [![Dependency Status](https://gemnasium.com/meineerde/form_forms.png?travis)](https://gemnasium.com/meineerde/form_forms)
+# FormForms
 
-Configurable forms for Rails 3, based on the excellent
+[![Gem Version](https://badge.fury.io/rb/form_forms.png)](https://rubygems.org/gems/form_forms)
+[![Build Status](https://secure.travis-ci.org/meineerde/form_forms.png)](http://travis-ci.org/meineerde/form_forms)
+[![Code Climate](https://codeclimate.com/github/meineerde/form_forms.png)](https://codeclimate.com/github/meineerde/form_forms)
+
+Configurable forms for Rails 3 and 4, based on the excellent
 [simple_form](https://github.com/plataformatec/simple_form) gem.
 
 The goal of this gem is to provide forms (as in views) which are flexible
@@ -237,7 +241,7 @@ markup the form using custom CSS rules. This element works similar to the
 
 Here, the block element takes the name of the newly created element, the type
 of HTML tag to create and a hash of options to pass to the `content_tag`
-helper of ´Rails which creates the tag internally.
+helper of Rails which creates the tag internally.
 
 The generator block creates a new element scope similar to the fieldset
 element.

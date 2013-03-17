@@ -353,14 +353,52 @@ Each element in the association collection is rendered as s single row.
 
 To customize the table, you can use the following properties:
 
-* `table.args`: Hash of additional arguments for specifying the simple_form association.
+* `table.args`: Hash of additional arguments for specifying the simple_form
+  association.
 * `table.table_args`: Hash of HTML attributes of the `<table>` tag.
 * `table.row_args`: Hash of HTML attributes of each `<tr>` tag.
-* `table.<element>.cell_args`: Hash of HTML attributes of the `<td>` tag for a field in a row.
+* `table.<element>.cell_args`: Hash of HTML attributes of the `<td>` tag for
+  a field in a row.
 
 * `table.header`
   * `table.header.row_args`: Hash of HTML attributes of the header row
-  * `table.header.<element>.cell_args`: Hash of HTML attributes of the `<th>` tag for a field in the header row
+  * `table.header.<element>.cell_args`: Hash of HTML attributes of the `<th>`
+    tag for a field in the header row
+
+# Partials
+
+FormForms supports the idea of partials, that is forms which are intended to
+be included into other forms. They can be used to define reusable blocks of
+shared functionality. Partial forms are never used outside of a "real" form.
+
+The partial system consists of two parts: a `PartialForm` class which can be
+used to define a partial. Its definition API is similar to an actual form
+(as it's just a child class of the `Form` class). All the elements allowed in
+a form are allowed here.
+
+To use a partial in a form, you can reference it using the `partial` element.
+The references partial will be included into the form and handled as if it
+were defined inline.
+
+    FormForms::Registry[:"_soul"] = FormForms::Forms::PartialForm.new() do |partial|
+      partial.field(:sell_your_soul) {|f| f.input :sell_your_soul}
+    end
+
+    FormForms::Registry[:user] = FormForms::Forms::Form.new() do |form|
+      form.field(:street) {|f| f.input :street }
+      form.partial(:partial, :"_soul")
+    end
+
+The partial to be included can be specified using different variants:
+
+* By using a name as the second argument as in the example above. The partial
+  will be looked up with this name from the `Registry`. Alternatively, you can
+  set the actual `PartialForm` object directly by passing it as an argument.
+* By using a generator block. The block can return a name or a `PartialForm`
+  object which will be handled exactly the same as above.
+
+Following Rails conventions, the name of a partial in the registry should
+start with an underscore character.
 
 # Development
 

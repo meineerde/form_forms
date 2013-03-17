@@ -8,6 +8,7 @@
 * Allow to define fields with plain non-dynamic values
 * `FormRegistry` is renamed to `Registry`. The old name will be removed in 0.4.0
 * `Registry` (née `FormRegistry`) behaves now like a `HashWithIndifferentAccess`.
+* Add partial forms
 
 ## v0.2.0 - 2012-06-17
 

@@ -65,7 +65,7 @@ module FormForms
           def #{type}(name, *args, &block)
             name = name.to_sym
 
-            if block_given?
+            if block_given? || !args.empty?
               element(name, #{klass}.new(*args, &block))
             else
               @generators[name]

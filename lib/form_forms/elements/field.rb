@@ -20,8 +20,8 @@ module FormForms
     #     end
     #   end
     class Field < BaseElement
-      def initialize(&generator)
-        self.generator generator
+      def initialize(value=nil, &generator)
+        self.generator (block_given? ? generator : value)
       end
 
       property :generator

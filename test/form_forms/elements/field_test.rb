@@ -19,6 +19,14 @@ class FieldTest < ActionView::TestCase
     assert_select 'span#foo', "Something"
   end
 
+  test "render a verbatim field" do
+    with_form_for(@user) do |form|
+      form.field :something, '<span id="foo">Something</span>'.html_safe
+    end
+
+    assert_select 'span#foo', "Something"
+  end
+
   test "escape unsafe output" do
     with_form_for(@user) do |form|
       form.field(:something) {|f| '<span id="foo">Something</span>'}

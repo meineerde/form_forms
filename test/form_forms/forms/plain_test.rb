@@ -4,7 +4,7 @@ module FormForms
   module Forms
     class PlainTest < ActionView::TestCase
       test "render simple blocks" do
-        assert_nil FormForms::FormRegistry['plain_form']
+        assert_nil FormForms::Registry['plain_form']
 
         form = Plain.register('plain_form') do |form|
           form.block(:block1, :div) do |sub1|
@@ -13,7 +13,7 @@ module FormForms
           end
           form.field(:f3){content_tag :div, "Holger was here."}
         end
-        assert_equal FormForms::FormRegistry['plain_form'], form
+        assert_equal FormForms::Registry['plain_form'], form
 
         concat form.render(self)
 

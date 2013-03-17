@@ -27,7 +27,7 @@ module FormForms
       end
 
       def self.register(name, form_args={}, &generator)
-        ::FormForms::FormRegistry[name] = self.new(form_args, &generator)
+        ::FormForms::Registry[name] = self.new(form_args, &generator)
       end
     end
   end

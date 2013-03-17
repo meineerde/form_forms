@@ -6,6 +6,8 @@
   without an actual form builder
 * Remove support for Rails 3.0, add support for Rails 4.0
 * Allow to define fields with plain non-dynamic values
+* `FormRegistry` is renamed to `Registry`. The old name will be removed in 0.4.0
+* `Registry` (née `FormRegistry`) behaves now like a `HashWithIndifferentAccess`.
 
 ## v0.2.0 - 2012-06-17
 

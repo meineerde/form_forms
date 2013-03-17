@@ -8,7 +8,7 @@ module FormForms
         # This can be used for conditional rendering
         return unless partial
         # retrueve the partial form from the registry of necessary
-        partial = FormForms::FormRegistry[partial] unless partial.is_a? FormForms::Forms::PartialForm
+        partial = FormForms::Registry[partial] unless partial.is_a? FormForms::Forms::PartialForm
 
         partial.render(builder, view)
       end

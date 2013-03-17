@@ -21,10 +21,10 @@ class PartialTest < ActionView::TestCase
   end
 
   test "render partial from registry" do
-    FormForms::FormRegistry["sub_form_test/_credit_card"] = FormForms::Forms::PartialForm.new do |partial|
+    FormForms::Registry["sub_form_test/_credit_card"] = FormForms::Forms::PartialForm.new do |partial|
       partial.field(:credit_card) {|f| f.input :credit_card}
     end
-    FormForms::FormRegistry["sub_form_test/_credit_limit"] = FormForms::Forms::PartialForm.new do |partial|
+    FormForms::Registry["sub_form_test/_credit_limit"] = FormForms::Forms::PartialForm.new do |partial|
       partial.field(:credit_limit) {|f| f.input :credit_limit}
     end
 
@@ -39,8 +39,8 @@ class PartialTest < ActionView::TestCase
     assert_select 'form > div:nth-of-type(4) > input.decimal#user_credit_limit'
 
     # cleanup
-    FormForms::FormRegistry.delete("sub_form_test/_credit_card")
-    FormForms::FormRegistry.delete("sub_form_test/_credit_limit")
+    FormForms::Registry.delete("sub_form_test/_credit_card")
+    FormForms::Registry.delete("sub_form_test/_credit_limit")
   end
 
   test "render nothing if partial is falsey" do

@@ -197,7 +197,7 @@ way.
 It allows you to group several sub-elements which can then handled as a
 single element.
 
-    FormForms::Registry[:user] = FormForms::Form.new() do |form|
+    FormForms::Registry[:user] = FormForms::Forms::Form.new() do |form|
       form.field(:street) {|f| f.input :street }
       form.field(:city) {|f| f.input :city }
       form.sub_form(:payment) do |sub_form|
@@ -216,7 +216,7 @@ elements will create an HTML `<fieldset>` tag and a `<legend>` around its
 sub-elements. As a fieldset naturally contains other fields, its generator
 block can be used to define fields.
 
-    FormForms::Registry[:user] = FormForms::Form.new() do |form|
+    FormForms::Registry[:user] = FormForms::Forms::Form.new() do |form|
       form.field(:street) {|f| f.input :street }
       form.field(:city) {|f| f.input :city }
       form.fieldset(:payment, :id => "payment") do |fieldset|
@@ -244,7 +244,7 @@ A `block` creates a sub-form which nests form elements inside a HTML block
 markup the form using custom CSS rules. This element works similar to the
 `fieldset` described above.
 
-    FormForms::Registry[:user] = FormForms::Form.new() do |form|
+    FormForms::Registry[:user] = FormForms::Forms::Form.new() do |form|
       form.field(:street) {|f| f.input :street }
       form.block(:box, :div, :class => "red-and-blinky") do |block|
         block.field(:sell_your_soul) {|f| f.input :sell_your_soul}
@@ -263,7 +263,7 @@ element.
 Using fields, you can create sub-forms for association of the model object.
 This allows you to create forms for nested elements.
 
-    FormForms::Registry[:user] = FormForms::Form.new() do |form|
+    FormForms::Registry[:user] = FormForms::Forms::Form.new() do |form|
       form.field(:name) {|f| f.input :name}
 
       args = lambda{|f| {:collection => Tag.all} }
@@ -306,7 +306,7 @@ For additional forms functionality, you might want to use
 [cocoon](https://github.com/nathanvda/cocoon) which adds some JQuery functions
 to manipulate table rows in the browser (e.g. add or delete rows).
 
-    FormForms::Registry[:user] = FormForms::Form.new() do |form|
+    FormForms::Registry[:user] = FormForms::Forms::Form.new() do |form|
       form.field(:name) {|f| f.input :name}
 
       form.table_fields(:companies, :companies) do |table|

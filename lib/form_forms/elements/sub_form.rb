@@ -9,6 +9,7 @@ module FormForms
       allowed_sub_element :fieldset
       allowed_sub_element :fields
       allowed_sub_element :table_fields
+      allowed_sub_element :partial
 
       def render(builder, view)
         return unless render_me?(builder, view)

@@ -40,6 +40,7 @@ module FormForms
       allowed_sub_element :block, wrap_sub_element(:block)
       allowed_sub_element :fieldset, wrap_sub_element(:fieldset)
       allowed_sub_element :fields, wrap_sub_element(:fields)
+      allowed_sub_element :partial, wrap_sub_element(:partial)
 
       def initialize(association, form_args={})
         self.association association

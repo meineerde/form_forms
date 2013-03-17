@@ -10,6 +10,7 @@ module FormForms
       allowed_sub_element :block
       allowed_sub_element :fieldset
       allowed_sub_element :fields
+      allowed_sub_element :partial
       allowed_sub_element :table_fields
 
       # Render the form.

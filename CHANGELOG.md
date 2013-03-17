@@ -1,5 +1,12 @@
 # FormForms Change Log
 
+## v0.3.0 (to be released)
+
+* Add a new `plain` form type which can be used to generate an HTML form
+  without an actual form builder
+* Remove support for Rails 3.0, add support for Rails 4.0
+* Allow to define fields with plain non-dynamic values
+
 ## v0.2.0 - 2012-06-17
 
 * Add generic `sub_form` element

@@ -173,6 +173,18 @@ simple_form object. Alternatively to a block, you can also directly pass a
 string which will be emitted as-is. The usual HTML escape rules apply, i.e.
 you have to use `html_save` correctly to avoid rendering unsafe data.
 
+Alternativly to a block, you can also set a static content by assigning it to
+the second argument. This will only be set during form initialization and will
+not be evaluated during form rendering again. Use this to set value which are
+always static.
+
+The following two variants are equivalent:
+
+    FormForms::Registry[:user] = FormForms::Forms::Form.new() do |form|
+      form.field(:dynamic) {|f| "a value" }
+      form.field(:statis, "a value")
+    end
+
 ## `sub_form`
 
 Almost all the other element types create a sub form. It allows to group

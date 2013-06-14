@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
 
-gem "activesupport", "~> 4.0.0.beta1"
-gem "actionpack", "~> 4.0.0.beta1"
-gem "simple_form", "= 3.0.0beta1"
+gem "activesupport", "~> 4.0.0.rc2"
+gem "actionpack", "~> 4.0.0.rc2"
+gem "simple_form", "= 3.0.0rc"
 
 group :test do
-  gem "activemodel", "~> 4.0.0.beta1"
+  gem "activemodel", "~> 4.0.0.rc2"
   gem "rake"
 end

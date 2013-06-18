@@ -15,9 +15,9 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Formforms::VERSION
 
-  gem.add_dependency "activesupport", ">= 3.1.0", "<= 4.0.0.beta1"
-  gem.add_dependency "actionpack", ">= 3.1.0", "<= 4.0.0.beta1"
+  gem.add_dependency "activesupport", ">= 3.1.0", "<= 4.0.0.rc2"
+  gem.add_dependency "actionpack", ">= 3.1.0", "<= 4.0.0.rc2"
   gem.add_dependency "simple_form"
 
-  gem.add_development_dependency "activemodel", ">= 3.1.0", "<= 4.0.0.beta1"
+  gem.add_development_dependency "activemodel", ">= 3.1.0", "<= 4.0.0.rc2"
 end

@@ -1,20 +1,29 @@
 require 'active_support/hash_with_indifferent_access'
 
 module FormForms
-  class Registry
+  class Registry < DelegateClass(ActiveSupport::HashWithIndifferentAccess)
     class << self
       def method_missing(method, *args, &block)
-        if forms.respond_to?(method)
-          forms.send(method, *args, &block)
+        if instance.respond_to?(method)
+          instance.send(method, *args, &block)
         else
           super
         end
       end
 
-    protected
-      def forms
-        @forms ||= HashWithIndifferentAccess.new
+      def respond_to?(*args)
+        super || instance.respond_to?(*args)
       end
+
+      def instance
+        @instance ||= self.new
+      end
+    end
+
+    def initialize
+      @forms = HashWithIndifferentAccess.new
+      # setup the delegation
+      super(@forms)
     end
   end
 

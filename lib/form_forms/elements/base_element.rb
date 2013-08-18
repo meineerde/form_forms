@@ -11,7 +11,7 @@ module FormForms
         yield self
       end
 
-      attr_reader :elements
+      attr_reader :elements, :name
 
       # Render all of the elements of the current FormForm in their defined
       # order. This method is expected to be called by sub-classes in the
@@ -32,6 +32,7 @@ module FormForms
       end
 
     protected
+      attr_writer :name
 
       # Allow the passed form type as a sub-element of the current form.
       # Sub-elements must have a unique name inside the current form scope.
@@ -66,7 +67,9 @@ module FormForms
             name = name.to_sym
 
             if block_given? || !args.empty?
-              element(name, #{klass}.new(*args, &block))
+              generator = #{klass}.new(*args, &block)
+              generator.name = name
+              element(generator)
             else
               @generators[name]
             end
@@ -74,15 +77,22 @@ module FormForms
           alias_method :#{type}_last, :#{type}
 
           def #{type}_first(name, *args, &block)
-            element_before(nil, name.to_sym, #{klass}.new(*args, &block))
+            generator = #{klass}.new(*args, &block)
+            generator.name = name.to_sym
+            element_before(nil, generator)
           end
 
           def #{type}_before(before, name, *args, &block)
-            element_before(before.to_sym, name.to_sym, #{klass}.new(*args, &block))
+            generator = #{klass}.new(*args, &block)
+            generator.name = name.to_sym
+            element_before(before.to_sym, generator)
           end
 
           def #{type}_after(after, name, *args, &block)
-            element_after(after.to_sym, name.to_sym, #{klass}.new(*args, &block))
+            name = name.to_sym
+            generator = #{klass}.new(*args, &block)
+            generator.name = name
+            element_after(after.to_sym, generator)
           end
         RUBY
       end
@@ -126,32 +136,32 @@ module FormForms
       # Append a generic element to the end of the elements list. This method
       # is supposed tpo be called by the generated public methods of each
       # sub-element type.
-      def element(name, generator)
-        @elements << name unless @elements.include? name
-        @generators[name] = generator
+      def element(generator)
+        @elements << generator.name unless @elements.include? generator.name
+        @generators[generator.name] = generator
       end
 
       # Insert an element directly after an existing alement. The element
       # +name+ can not be defined in the current form scope yet. The +after+
       # element has to exist or be nil. If it is nil, the new element is
       # appended to the end of the element list.
-      def element_after(after, name, generator)
-        if @elements.include? name
+      def element_after(after, generator)
+        if @elements.include? generator.name
           # Only allow new elements. Existing fields can be changed with #element
-          raise ArgumentError.new("#{name} is already registered.")
+          raise ArgumentError, "#{generator.name} is already registered."
         end
 
         after_index = @elements.index(after)
         if !after.nil? && after_index.nil?
           # This method makes only sense if the before element actually exists
-          raise ArgumentError.new("#{after} is not registered. I can't insert after it.")
+          raise ArgumentError, "#{after} is not registered. I can't insert after it."
         elsif after.nil? || after_index == @elements.length-1
           # Append at the end
-          element(name, generator)
+          element(generator)
         else
           # Perform an insert
-          @elements.insert(after_index+1, name)
-          @generators[name] = generator
+          @elements.insert(after_index+1, generator.name)
+          @generators[generator.name] = generator
         end
       end
 
@@ -159,26 +169,26 @@ module FormForms
       # +name+ can not be defined in the current form scope yet. The +before+
       # element has to exist or be nil. If it is nil, the new element is added
       # at the very beginning of the list.
-      def element_before(before, name, generator)
+      def element_before(before, generator)
         before_index = @elements.index(before)
 
-        if @elements.include? name
+        if @elements.include? generator.name
           # Only allow new elements. Existing fields can be changed with #element
-          raise ArgumentError.new("#{name} is already registered.")
+          raise ArgumentError, "#{generator.name} is already registered."
         elsif !before.nil? && before_index.nil?
           # This method makes only sense if the before element actually exists
-          raise ArgumentError.new("#{before} is not registered. I can't insert before it.")
+          raise ArgumentError, "#{before} is not registered. I can't insert before it."
         end
 
         # Perform an insert
         if before.nil?
           # insert at the beginning of the list
-          @elements.unshift(name)
+          @elements.unshift(generator.name)
         else
           # insert the element before the named one
-          @elements.insert(before_index, name)
+          @elements.insert(before_index, generator.name)
         end
-        @generators[name] = generator
+        @generators[generator.name] = generator
       end
 
       # Render all elements in the current

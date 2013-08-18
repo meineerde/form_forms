@@ -18,6 +18,7 @@ module FormForms
     #         content_tag(:a, :href => hint_path){ "This is a hint" }
     #       end
     #     end
+    #     form.field(:hint, "This is a hint")
     #   end
     class Field < BaseElement
       def initialize(value=nil, &generator)

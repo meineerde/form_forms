@@ -69,7 +69,7 @@ module FormForms
           def #{type}(name, *args, &block)
             name = name.to_sym
 
-            if block_given? || !args.empty?
+            if block_given? || !args.empty? || (!@elements.include?(name) && [-1, 0].include?(#{klass}.instance_method(:initialize).arity))
               generator = #{klass}.new(*args, &block)
               generator.name = name
               element(generator)
@@ -137,7 +137,7 @@ module FormForms
       end
 
       # Append a generic element to the end of the elements list. This method
-      # is supposed tpo be called by the generated public methods of each
+      # is supposed to be called by the generated public methods of each
       # sub-element type.
       def element(generator)
         @elements << generator.name unless @elements.include? generator.name

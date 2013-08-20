@@ -7,6 +7,7 @@ module MiscHelpers
     form = FormForms::Forms::Form.new(*args, &(block || proc {}))
     @rendered = form.render(object, self)
     concat @rendered
+    form
   end
 
   def rendered

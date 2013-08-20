@@ -11,7 +11,10 @@ module FormForms
         yield self
       end
 
-      attr_reader :elements, :name
+      attr_reader :name
+      def elements
+        @elements.dup.freeze
+      end
 
       # Render all of the elements of the current FormForm in their defined
       # order. This method is expected to be called by sub-classes in the

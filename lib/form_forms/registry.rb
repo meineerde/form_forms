@@ -1,4 +1,5 @@
 require 'active_support/hash_with_indifferent_access'
+require 'delegate'
 
 module FormForms
   class Registry < DelegateClass(ActiveSupport::HashWithIndifferentAccess)

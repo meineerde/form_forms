@@ -36,6 +36,8 @@ module FormForms
 
     public
       allowed_sub_element :field, wrap_sub_element(:field)
+      allowed_sub_element :input, wrap_sub_element(:input)
+      allowed_sub_element :input, wrap_sub_element(:input_field)
       allowed_sub_element :sub_form, wrap_sub_element(:sub_form)
       allowed_sub_element :block, wrap_sub_element(:block)
       allowed_sub_element :fieldset, wrap_sub_element(:fieldset)

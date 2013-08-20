@@ -1,7 +1,10 @@
 require 'form_forms/elements/base_element'
 require 'form_forms/elements/sub_form'
-require 'form_forms/elements/block'
 require 'form_forms/elements/field'
+
+require 'form_forms/elements/block'
+require 'form_forms/elements/input'
+require 'form_forms/elements/input_field'
 require 'form_forms/elements/fields'
 require 'form_forms/elements/fieldset'
 require 'form_forms/elements/partial'

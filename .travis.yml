@@ -10,6 +10,8 @@ gemfile:
   - test/gemfiles/Gemfile.rails3_1
   - test/gemfiles/Gemfile.rails3_2
   - test/gemfiles/Gemfile.rails4_0
+cache:
+  - bundler
 matrix:
   exclude:
     - rvm: 1.8.7
